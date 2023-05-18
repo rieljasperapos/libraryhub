@@ -23,4 +23,3 @@ kristina    kristina    user
 6. Alternative
     -Sign up a new Account
 
-7. Enjoy!
