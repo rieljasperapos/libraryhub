@@ -1,7 +1,7 @@
 # CIS-1202-project
 How to run:
-1. Extract zip folder "final"
-2. Put "final" folder to htdocs
+1. Extract zip folder
+2. Put folder to htdocs
 4. Activate xampp
     -open xampp
     -go to manage servers
@@ -12,7 +12,7 @@ How to run:
     - import the "libray-hub.sql" file in the created database
 
 4. In browser
-    -type "localhost/library-hub"
+    -type "localhost/'folder name'"
 
 5. To access the website in login
 Username:	Password:	Account Type:
