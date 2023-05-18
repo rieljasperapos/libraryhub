@@ -11,7 +11,7 @@ How to run:
     - import the "libray-hub.sql" file in the created database
 
 4. In browser
-    -type "localhost/final/library-hub.php"
+    -type "localhost/library-hub"
 
 5. To access the website in login
 Username:	Password:	Account Type:
