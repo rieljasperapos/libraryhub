@@ -1,52 +1,56 @@
 <?php
 session_start();
 
-    include("./includes/connection.php");
-    include("./includes/functions.php");
+include("./includes/connection.php");
+include("./includes/functions.php");
 
-    $user_data = check_login($con);
-    
-    $bookId = NULL;
-    $bookTitle = NULL;
-    
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['searchButton'])) {
-        $bookId = $_POST['bookId'];
-        
-        $query = "SELECT bookTitle FROM books WHERE bookId = '$bookId'";
-        $result = mysqli_query($con, $query);
-        
-        if (mysqli_num_rows($result) > 0) {
-            $row = mysqli_fetch_assoc($result);
-            $bookTitle = $row['bookTitle'];
-        } else {
-            // Book not found
-            $bookTitle = "Book not found";
-        }
+$user_data = check_login($con);
+
+$bookId = NULL;
+$bookTitle = NULL;
+$borrowDate = date("Y-m-d"); // Get today's date
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['searchButton'])) {
+    $bookId = $_POST['bookId'];
+
+    $query = "SELECT bookTitle FROM books WHERE bookId = '$bookId'";
+    $result = mysqli_query($con, $query);
+
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $bookTitle = $row['bookTitle'];
+    } else {
+        // Book not found
+        $bookTitle = "Book not found";
     }
+}
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['borrowButton'])) {
-        $currentUserId = $user_data['accountId'];
-        $bookIdSelect = $_POST['bookIdSelect'];
-        $borrowDate = $_POST['borrowDate'];
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['borrowButton'])) {
+    $currentUserId = $user_data['accountId'];
+    $bookIdSelect = $_POST['bookIdSelect'];
 
-        $query = "INSERT INTO borrow (bookId, accountId, borrowDate) VALUES('$bookIdSelect', '$currentUserId', '$borrowDate')";
-        
-        mysqli_query($con, $query);
-    }
+    // No need to get borrowDate from $_POST, it's already set to today's date
+    $borrowDate = date("Y-m-d");
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['returnButton'])) {
-        $borrowId = $_POST['borrowId'];
-        $returnDate = $_POST['returnDate'];
-    
-        $query = "UPDATE borrow SET returnDate = '$returnDate' WHERE borrowId = '$borrowId'";
-    
-        mysqli_query($con, $query);
-    }
+    $query = "INSERT INTO borrow (bookId, accountId, borrowDate) VALUES('$bookIdSelect', '$currentUserId', '$borrowDate')";
+
+    mysqli_query($con, $query);
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['returnButton'])) {
+    $borrowId = $_POST['borrowId'];
+    $returnDate = $_POST['returnDate'];
+
+    $query = "UPDATE borrow SET returnDate = '$returnDate' WHERE borrowId = '$borrowId'";
+
+    mysqli_query($con, $query);
+}
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -55,9 +59,10 @@ session_start();
     <link rel="stylesheet" href="./css/style.css">
     <title>LibraryHub Books</title>
 </head>
+
 <body>
     <!-- Navbar -->
-    <?php include './includes/navbar.php';?>
+    <?php include './includes/navbar.php'; ?>
 
     <!-- Showcase -->
     <section class="text-light p-4 text-center d-flex justify-content-center borrow mb-5">
@@ -77,31 +82,35 @@ session_start();
                     <form class="container p-3 bg-white rounded-3 pt-4 mt-1" method="post">
                         <div class="form-group mb-2">
                             <label for="bookId">Book ID</label>
-                            <input type="text" class="form-control custom-input" id="bookId" placeholder="Enter Book ID" name="bookId">
+                            <input type="text" class="form-control custom-input" id="bookId" placeholder="Enter Book ID" name="bookId" required>
                         </div>
                         <div class="d-grid gap-2">
-                                <input class="btn btn-primary p-3 my-3 rounded-5" type="submit" value="Search" name="searchButton">
+                            <input class="btn btn-primary p-3 my-3 rounded-5" type="submit" value="Search" name="searchButton">
                         </div>
+
+                        <?php if (isset($_POST['searchButton'])): ?>
                         <div class="form-group mb-2">
                             <label for="bookId">Book ID</label>
-                            <input type="text" class="form-control custom-input" id="bookId" name="bookIdSelect" value="<?php echo $bookId; ?>">
+                            <input type="text" class="form-control custom-input" id="bookId" name="bookIdSelect" value="<?php echo $bookId; ?>" readonly>
                         </div>
                         <div class="form-group mb-2">
                             <label for="bookTitle">Book Title</label>
-                            <input type="text" class="form-control custom-input" id="bookTitle" value="<?php echo $bookTitle; ?>">
+                            <input type="text" class="form-control custom-input" id="bookTitle" value="<?php echo $bookTitle; ?>" readonly>
                         </div>
                         <div class="form-group mb-2">
                             <label for="borrowDate">Borrow Date</label>
-                            <input type="date" class="form-control custom-input" id="borrowDate" name="borrowDate">
+                            <input type="date" class="form-control custom-input" id="borrowDate" name="borrowDate" value="<?php echo date('Y-m-d'); ?>" readonly>
                         </div>
                         <div class="d-grid gap-2">
                             <input class="btn btn-primary p-3 my-3 rounded-5" type="submit" value="Borrow" name="borrowButton">
                         </div>
+                        <?php endif; ?>
+                        
                     </form>
                 </div>
             </div>
 
-      <!-- To Return -->
+            <!-- To Return -->
             <div class="col-md-4">
                 <div class="container custom-container mt-4 mb-5 border p-4">
                     <h3 class="fw-bold">To Return</h3>
@@ -130,7 +139,7 @@ session_start();
 
                             // Loop through each row and display the data
                             while ($row = mysqli_fetch_assoc($result)) {
-                                if($row['returnDate'] == NULL){
+                                if ($row['returnDate'] == NULL) {
                                     echo "<tr>";
                                     echo "<td>{$row['borrowId']}</td>";
                                     echo "<td>{$row['bookId']}</td>";
@@ -148,7 +157,7 @@ session_start();
                     </div>
                 </div>
             </div>
-            
+
             <!-- Retun -->
             <div class="col-md-4">
                 <div class="container custom-container mt-4 mb-5 border p-4">
@@ -163,23 +172,24 @@ session_start();
                             <input type="date" class="form-control custom-input" id="returnDate" name="returnDate">
                         </div>
                         <div class="d-grid gap-2">
-                                <input class="btn btn-primary p-3 my-3 rounded-5" type="submit" value="Return" name="returnButton">
+                            <input class="btn btn-primary p-3 my-3 rounded-5" type="submit" value="Return" name="returnButton">
                         </div>
-                        </div>
-                    </form>
                 </div>
+                </form>
             </div>
+        </div>
         </div>
     </section>
 
-    
+
 
     <!-- Footer -->
-    <?php include 'footer.php';?>
+    <?php include 'footer.php'; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
 </body>
+
 </html>
 
 <?php
