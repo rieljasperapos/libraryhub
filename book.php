@@ -106,16 +106,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deleteButton'])) {
 
             <div class="collapse navbar-collapse" id="navmenu">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item p-2">
+                    <li class="nav-item p-3">
                         <a href="index.php" class="nav-link">Home</a>
                     </li>
-                    <li class="nav-item p-2">
+                    <li class="nav-item p-3">
                         <a href="borrow.php" class="nav-link">Borrow</a>
                     </li>
-                    <li class="nav-item p-2">
-                        <a href="book.php" class="nav-link" >Books</a>
+                    <li class="nav-item p-3">
+                        <a href="book.php" class="nav-link" >Manage</a>
                     </li>
-                    <li class="nav-item p-2">
+                    <li class="nav-item p-3">
                         <a href="logout.php" class="nav-link">Log out</a>
                     </li>
                 </ul>

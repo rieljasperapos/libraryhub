@@ -17,23 +17,23 @@ $user_data = check_login($con);
 
             <div class="collapse navbar-collapse" id="navmenu">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item p-2">
+                    <li class="nav-item p-3">
                         <a href="index.php" class="nav-link">Home</a>
                     </li>
-                    <li class="nav-item p-2">
+                    <li class="nav-item p-3">
                         <a href="borrow.php" class="nav-link">Borrow</a>
                     </li>';
                 
                     if ($user_data['accountId'] == 1) {
-                       echo '<li class="nav-item p-2">
-                        <a href="book.php" class="nav-link" >Books</a>
+                       echo '<li class="nav-item p-3">
+                        <a href="book.php" class="nav-link" >Manage</a>
                     </li>';
                     }
     
-                echo '<!-- <li class="nav-item p-2">
+                echo '<!-- <li class="nav-item p-3">
                         <a href="book.php" class="nav-link" >Books</a>
                     </li> -->
-                    <li class="nav-item p-2">
+                    <li class="nav-item p-3">
                         <a href="logout.php" class="nav-link">Log out</a>
                     </li>
                 </ul>
