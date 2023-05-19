@@ -7,5 +7,5 @@ function scrollToBookPage() {
 }
 
 function myFunction() {
-    alert("Not admin (Test Message)");
+    alert("Not admin");
   }
