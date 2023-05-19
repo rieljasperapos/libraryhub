@@ -11,7 +11,7 @@ $bookTitle = NULL;
 $borrowDate = date("Y-m-d"); // Get today's date
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['searchButton'])) {
-    $bookId = $_POST['bookId'];
+    $bookId = $_POST['bookIdSelect'];
 
     $query = "SELECT bookTitle FROM books WHERE bookId = '$bookId'";
     $result = mysqli_query($con, $query);
@@ -56,6 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['returnButton'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="./js/updateBook.js"></script>
     <link rel="stylesheet" href="./css/style.css">
     <title>LibraryHub Books</title>
 </head>
@@ -74,19 +75,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['returnButton'])) {
 
     <!-- forms -->
     <section class="container-fluid mt-5">
-        <div class="row px-5 pb-3">
-            <!-- Borrow -->
-            <div class="col-md-4">
-                <div class="container custom-container mt-4 mb-5 border p-4">
-                    <h3 class="fw-bold">Borrow</h3>
-                    <form class="container p-3 bg-white rounded-3 pt-4 mt-1" method="post">
-                        <div class="form-group mb-2">
-                            <label for="bookId">Book ID</label>
-                            <input type="text" class="form-control custom-input" id="bookId" placeholder="Enter Book ID" name="bookId" required>
-                        </div>
-                        <div class="d-grid gap-2">
-                            <input class="btn btn-primary p-3 my-3 rounded-5" type="submit" value="Search" name="searchButton">
-                        </div>
+    <div class="row px-5 pb-3">
+        <!-- Borrow -->
+        <div class="col-md-4">
+            <div class="container custom-container mt-4 mb-5 border p-4">
+                <h3 class="fw-bold">Borrow</h3>
+                <form class="container p-3 bg-white rounded-3 pt-4 mt-1" method="post">
+                    <div class="form-group mb-2">
+                        <label for="bookSelect">Select Book</label>
+                        <select class="form-control custom-input" id="bookSelect" name="bookIdSelect" onchange="updateBookInfo()">
+                            <option value="" selected disabled>Select a book</option>
+                            <?php
+                            $query = "SELECT bookId, bookTitle FROM books";
+                            $result = mysqli_query($con, $query);
+
+                            if (mysqli_num_rows($result) > 0) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    $id = $row['bookId'];
+                                    $title = $row['bookTitle'];
+                                    echo "<option value='$id'>$id - $title</option>";
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <input class="btn btn-primary p-3 my-3 rounded-5" type="submit" value="Search" name="searchButton">
+                    </div>
 
                         <?php if (isset($_POST['searchButton'])): ?>
                         <div class="form-group mb-2">
@@ -105,7 +120,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['returnButton'])) {
                             <input class="btn btn-primary p-3 my-3 rounded-5" type="submit" value="Borrow" name="borrowButton">
                         </div>
                         <?php endif; ?>
-                        
                     </form>
                 </div>
             </div>
