@@ -32,7 +32,7 @@ session_start();
             <h1>Books</h1>
         </div>
         <div class="container d-flex justify-content-center">
-            <div class="card-group text-center">
+            <div class="card-group text-center justify-content-center">
                 <?php
                         // Create a query
                         $sql = "SELECT bookId,bookTitle,author,publishDate,photo,synopsis FROM books";
