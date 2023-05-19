@@ -8,4 +8,4 @@ function scrollToBookPage() {
 
 function myFunction() {
     alert("Not admin");
-  }
+}

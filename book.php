@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addButton'])) {
     $query = "INSERT INTO books (bookTitle, author, publishDate, synopsis, photo) VALUES ('$bookTitle', '$author', '$publishDate', '$synopsis', '$photoName')";
 
     if ($photoError === UPLOAD_ERR_OK) {
-        $uploadDir = 'C:/xampp/htdocs/final/library-hub/images/book/';// Modify this path to match the absolute path to your htdocs directory
+        $uploadDir = 'D:/XAMPP/htdocs/testfolder/CIS-1202-project/images/book/';// Modify this path to match the absolute path to your htdocs directory
         $photoDestination = $uploadDir . $photoName;
         move_uploaded_file($photoTmpName, $photoDestination);
         
@@ -89,8 +89,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deleteButton'])) {
     <title>LibraryHub Books</title>
 </head>
 <body>
-    <!-- Navbar -->
-    <?php include 'navbar.php';?>
+    <?php
+
+    echo '<nav class="navbar navbar-expand-lg" data-bs-theme="dark" id="navbar">
+        <div class="container">
+            <a href="index.php" class="navbar-brand fs-1 fw-bold logo">LIBRARYHUB</a> 
+
+            <button 
+            class="navbar-toggler" 
+            type="button" 
+            data-bs-toggle="collapse" 
+            data-bs-target="#navmenu"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navmenu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item p-2">
+                        <a href="index.php" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item p-2">
+                        <a href="borrow.php" class="nav-link">Borrow</a>
+                    </li>
+                    <li class="nav-item p-2">
+                        <a href="book.php" class="nav-link" >Books</a>
+                    </li>
+                    <li class="nav-item p-2">
+                        <a href="logout.php" class="nav-link">Log out</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>';
+    ?>
 
     <!-- Showcase -->
     <section class="text-light p-4 text-center d-flex justify-content-center borrow mb-5">

@@ -1,5 +1,8 @@
 <?php
-    echo '<nav class="navbar navbar-expand-lg" data-bs-theme="dark" id="navbar">
+
+$user_data = check_login($con);
+
+ echo '<nav class="navbar navbar-expand-lg" data-bs-theme="dark" id="navbar">
         <div class="container">
             <a href="index.php" class="navbar-brand fs-1 fw-bold logo">LIBRARYHUB</a> 
 
@@ -19,10 +22,17 @@
                     </li>
                     <li class="nav-item p-2">
                         <a href="borrow.php" class="nav-link">Borrow</a>
-                    </li>
-                    <li class="nav-item p-2">
+                    </li>';
+                
+                    if ($user_data['accountId'] == 1) {
+                       echo '<li class="nav-item p-2">
                         <a href="book.php" class="nav-link" >Books</a>
-                    </li>
+                    </li>';
+                    }
+    
+                echo '<!-- <li class="nav-item p-2">
+                        <a href="book.php" class="nav-link" >Books</a>
+                    </li> -->
                     <li class="nav-item p-2">
                         <a href="logout.php" class="nav-link">Log out</a>
                     </li>
@@ -30,4 +40,3 @@
             </div>
         </div>
     </nav>';
-?>
