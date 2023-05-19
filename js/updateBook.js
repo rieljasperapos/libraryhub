@@ -7,4 +7,6 @@ function updateBookInfo() {
     var bookTitle = selectedOption.text.split(' - ')[1];
     bookIdInput.value = bookId;
     bookTitleInput.value = bookTitle;
+
+    borrowDate.valueAsDate = new Date();
 }

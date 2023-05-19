@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['returnButton'])) {
                 <form class="container p-3 bg-white rounded-3 pt-4 mt-1" method="post">
                     <div class="form-group mb-2">
                         <label for="bookSelect">Select Book</label>
-                        <select class="form-control custom-input" id="bookSelect" name="bookIdSelect" onchange="updateBookInfo()">
+                        <select class="form-control custom-input" id="bookSelect" name="bookIdSelect" onchange="updateBookInfo()" required>
                             <option value="" selected disabled>Select a book</option>
                             <?php
                             $query = "SELECT bookId, bookTitle FROM books";
@@ -99,11 +99,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['returnButton'])) {
                             ?>
                         </select>
                     </div>
-                    <div class="d-grid gap-2">
+                    <!-- <div class="d-grid gap-2">
                         <input class="btn btn-primary p-3 my-3 rounded-5" type="submit" value="Search" name="searchButton">
-                    </div>
+                    </div> -->
+                    <hr><br>
 
-                        <?php if (isset($_POST['searchButton'])): ?>
                         <div class="form-group mb-2">
                             <label for="bookId">Book ID</label>
                             <input type="text" class="form-control custom-input" id="bookId" name="bookIdSelect" value="<?php echo $bookId; ?>" readonly>
@@ -114,12 +114,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['returnButton'])) {
                         </div>
                         <div class="form-group mb-2">
                             <label for="borrowDate">Borrow Date</label>
-                            <input type="date" class="form-control custom-input" id="borrowDate" name="borrowDate" value="<?php echo date('Y-m-d'); ?>" readonly>
+                            <input type="date" class="form-control custom-input" id="borrowDate" name="borrowDate" readonly>
                         </div>
                         <div class="d-grid gap-2">
                             <input class="btn btn-primary p-3 my-3 rounded-5" type="submit" value="Borrow" name="borrowButton">
                         </div>
-                        <?php endif; ?>
                     </form>
                 </div>
             </div>
