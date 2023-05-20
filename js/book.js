@@ -81,3 +81,4 @@ function goPrevPage() {
         currentLocation--;
     }
 }
+

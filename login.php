@@ -24,11 +24,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['loginButton'])) {
             } 
         } 
         
-        echo "Wrong Username and password";
+        echo '<script>alert("Wrong Username or Password");</script>';
     } else {
-        echo "Please enter a username and password";
+        echo '<script>alert("Please enter a username and password");</script>';
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -66,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['loginButton'])) {
                                   <label for="password" class="form-label pt-2">Password</label>
                                   <input type="password" class="form-control form-control-lg bg-light fs-6" id="password" name="password">
                                 </div>
-                                
+
                                 <div class="d-grid gap-2">
                                     <input class="btn btn-primary p-3 my-3 rounded-5" type="submit" value="Log in" name="loginButton">
                                   </div>
@@ -138,6 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['loginButton'])) {
         </div>
     </section>
     
+        
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
