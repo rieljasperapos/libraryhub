@@ -1,12 +1,11 @@
-function openBookPopup(bookId) {
-  // Retrieve book details using AJAX or perform any necessary actions
-  // For example, you can make an AJAX request to fetch book details from the server
-
-  // Once you have the book details, you can display a pop-up with the information
-  // You can use JavaScript libraries like Bootstrap modal or create a custom pop-up
-
-  // Here's an example using JavaScript's built-in `alert()` function:
-    alert("Book ID: " + bookId);
+function openBookPopup(bookId, synopsis) {
+    // Update the modal body with the book synopsis
+    var modalBody = document.getElementById("bookModalBody");
+    modalBody.textContent = synopsis;
+    
+    // Show the modal
+    var bookModal = new bootstrap.Modal(document.getElementById("bookModal"));
+    bookModal.show();
 }
 
 function addShadow(element) {

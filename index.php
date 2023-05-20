@@ -26,7 +26,6 @@ $user_data = check_login($con);
     </section>
 
     <!-- Boxes -->
-
     <section class="p-5">
         <div class="container d-flex justify-content-center mb-4" id="bookpage">
             <h1>Books</h1>
@@ -42,11 +41,13 @@ $user_data = check_login($con);
                 if (mysqli_num_rows($result) > 0) {
                     // output data of each row
                     while ($row = mysqli_fetch_assoc($result)) {
+                        $bookId = $row['bookId'];
+                        $synopsis = $row['synopsis'];
                         echo '<div class="booksize text-center">
-                <div class="book-image" onMouseOver="addShadow(this)" onMouseOut="removeShadow(this)" onClick="openBookPopup(' . $row['bookId'] . ')">
+                    <div class="book-image" onMouseOver="addShadow(this)" onMouseOut="removeShadow(this)" onClick="openBookPopup(' . $bookId . ', `' . addslashes($synopsis) . '`)">
                     <img src="images/book/' . $row['photo'] . '" class="image-fluid">
-                </div>
-                    <p> Book ID:' . $row['bookId'] . '<br>' . $row['bookTitle'] . '</p>
+                    </div>
+                    <p>Book ID:' . $row['bookId'] . '<br>' . $row['bookTitle'] . '</p>
                 </div>';
                     }
                 } else {
@@ -56,6 +57,24 @@ $user_data = check_login($con);
             </div>
         </div>
     </section>
+
+    <!-- Bootstrap Modal for Book Details -->
+    <div class="modal fade" id="bookModal" tabindex="-1" aria-labelledby="bookModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bookModalLabel">Book Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="bookModalBody">
+                    <!-- Book details content will be dynamically updated by JavaScript -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <!-- Footer -->
