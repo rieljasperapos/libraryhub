@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deleteButton'])) {
     <!-- Showcase -->
     <section class="text-light p-4 text-center d-flex justify-content-center borrow mb-5">
         <div class="container my-3">
-            <h1 class="fw-bold">Books</h1>
+            <h1 class="fw-bold">Manage</h1>
             <p class="fs-3">Add or remove books</p>
         </div>
     </section>
