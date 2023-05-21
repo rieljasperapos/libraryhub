@@ -5,7 +5,7 @@ include("./includes/functions.php");
 
 $user_data = check_login($con);
 
-if($user_data['accountId'] != 1){
+if ($user_data['accountId'] != 1) {
     header("Location: index.php");
     exit;
 }
@@ -28,10 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addButton'])) {
     $query = "INSERT INTO books (bookTitle, author, publishDate, synopsis, photo) VALUES ('$bookTitle', '$author', '$publishDate', '$synopsis', '$photoName')";
 
     if ($photoError === UPLOAD_ERR_OK) {
-        $uploadDir = 'D:/XAMPP/htdocs/testfolder/CIS-1202-project/images/book/';// Modify this path to match the absolute path to your htdocs directory
+        $uploadDir = 'D:/XAMPP/htdocs/testfolder/CIS-1202-project/images/book/'; // Modify this path to match the absolute path to your htdocs directory
         $photoDestination = $uploadDir . $photoName;
         move_uploaded_file($photoTmpName, $photoDestination);
-        
+
 
         // Prepare and execute the SQL query
         if (mysqli_query($con, $query)) {
@@ -47,47 +47,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addButton'])) {
 }
 
 //search for book
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['searchButton'])) {
-    $bookId = $_POST['bookId'];
-    
-    $query = "SELECT bookTitle FROM books WHERE bookId = '$bookId'";
-    $result = mysqli_query($con, $query);
-    
-    if (mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
-        $bookTitle = $row['bookTitle'];
-    } else {
-        // Book not found
-        $bookTitle = "Book not found";
-    }
-}
-
-// Delete book data
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deleteButton'])) {
     $bookIdSelect = $_POST['bookIdSelect'];
-    
-    $query = "DELETE FROM books WHERE bookId = '$bookIdSelect'";
-    
-    if (mysqli_query($con, $query)) {
-        // Book deleted successfully
-        echo "Book deleted successfully!";
+
+    // Check if there are any associated borrow records for the selected book
+    $checkBorrowQuery = "SELECT * FROM borrow WHERE bookId = '$bookIdSelect'";
+    $result = mysqli_query($con, $checkBorrowQuery);
+
+    if (mysqli_num_rows($result) > 0) {
+        // Display an error message to the user
+        echo '<script>alert("Error: Cannot delete the book. It has associated borrow records.");</script>';
     } else {
-        // Error occurred
-        echo "Error: " . mysqli_error($con);
+        // No associated borrow records, proceed with deleting the book
+        $deleteBookQuery = "DELETE FROM books WHERE bookId = '$bookIdSelect'";
+
+        if (mysqli_query($con, $deleteBookQuery)) {
+            // Book deleted successfully
+            echo "Book deleted successfully!";
+        } else {
+            // Error occurred while deleting the book
+            echo "Error deleting book: " . mysqli_error($con);
+        }
     }
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="./js/updateBookDel.js"></script>
     <link rel="stylesheet" href="./css/style.css">
     <title>LibraryHub Books</title>
 </head>
+
 <body>
     <?php
 
@@ -172,35 +169,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deleteButton'])) {
                     <h3 class="fw-bold">Delete</h3>
                     <form class="container p-3 bg-white rounded-3 pt-4 mt-1" method="post">
                         <div class="form-group mb-2">
-                            <label for="bookId">Book ID</label>
-                            <input type="text" class="form-control custom-input" id="bookId" placeholder="Enter Book ID" name="bookId">
-                        </div>
-                        <div class="d-grid gap-2">
-                            <input class="btn btn-primary p-3 my-3 rounded-5" type="submit" value="Search" name="searchButton">
+                            <label for="bookSelect">Select Book</label>
+                            <select class="form-control custom-input" id="bookSelect" name="bookIdSelect" onchange="updateBookInfoDel()" required>
+                                <option value="" selected disabled>Select a book</option>
+                                <?php
+                                $query = "SELECT bookId, bookTitle FROM books";
+                                $result = mysqli_query($con, $query);
+
+                                if (mysqli_num_rows($result) > 0) {
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        $id = $row['bookId'];
+                                        $title = $row['bookTitle'];
+                                        echo "<option value='$id'>$id - $title</option>";
+                                    }
+                                }
+                                ?>
+                            </select>
                         </div>
                         <div class="form-group mb-2">
                             <label for="bookId">Book ID</label>
-                            <input type="text" class="form-control custom-input" id="bookId" name="bookIdSelect" value="<?php echo $bookId; ?>">
+                            <input type="text" class="form-control" id="bookId" name="bookIdSelect" readonly>
                         </div>
                         <div class="form-group mb-2">
                             <label for="bookTitle">Book Title</label>
-                            <input type="text" class="form-control custom-input" id="bookTitle" value="<?php echo $bookTitle; ?>">
+                            <input type="text" class="form-control" id="deleteBookTitle" readonly>
                         </div>
-                        <div class="d-grid gap-2">
-                            <input class="btn btn-primary p-3 my-3 rounded-5" type="submit" value="Delete" name="deleteButton">
-                        </div>
+                        <button type="submit" class="btn btn-danger" name="deleteButton">Delete</button>
                     </form>
                 </div>
             </div>
-        </div>
     </section>
 
     <!-- Footer -->
-    <?php include 'footer.php';?>
+    <?php include 'footer.php'; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
 </body>
+
 </html>
 
 <?php
