@@ -54,32 +54,32 @@
                 <h5 class="p-3">Signing Up</h5>
                 <div class="mb-2">
                   <label for="username" class="form-label">Username</label>
-                  <input type="text" class="form-control form-control-lg bg-light fs-6" id="username" name="username">
+                  <input type="text" class="form-control form-control-lg bg-light fs-6" id="username" name="username" required>
                 </div>
 
                 <div class="mb-2">
                   <label for="password" class="form-label">Password</label>
-                  <input type="password" class="form-control form-control-lg bg-light fs-6" id="password" name="password">
+                  <input type="password" class="form-control form-control-lg bg-light fs-6" id="password" name="password" required>
                 </div>
 
                 <div class="mb-2">
                   <label for="firstName" class="form-label">First Name</label>
-                  <input type="text" class="form-control form-control-lg bg-light fs-6" id="firstName" name="firstName">
+                  <input type="text" class="form-control form-control-lg bg-light fs-6" id="firstName" name="firstName" required>
                  </div>
 
                 <div class="mb-2">
                   <label for="lastName" class="form-label">Last Name</label>
-                  <input type="text" class="form-control form-control-lg bg-light fs-6" id="lastName" name="lastName">
+                  <input type="text" class="form-control form-control-lg bg-light fs-6" id="lastName" name="lastName" required>
                 </div>
 
                 <div class="mb-2">
                   <label for="age" class="form-label">Age</label>
-                  <input type="text" class="form-control form-control-lg bg-light fs-6" id="age" name="age">
+                  <input type="text" class="form-control form-control-lg bg-light fs-6" id="age" name="age" required>
                 </div>
 
                 <div class="mb-2">
                   <label for="birthday" class="form-label">Birthday</label>
-                  <input type="date" class="form-control form-control-lg bg-light fs-6" id="birthday" name="birthday">
+                  <input type="date" class="form-control form-control-lg bg-light fs-6" id="birthday" name="birthday" required>
                 </div>
 
                 <div class="mb-2">
