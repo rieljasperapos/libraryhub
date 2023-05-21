@@ -174,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['returnButton'])) {
             <!-- Retun -->
             <div class="col-md-4">
                 <div class="container custom-container mt-4 mb-5 border p-4">
-                    <h3 class="fw-bold">Borrow</h3>
+                    <h3 class="fw-bold">Return</h3>
                     <form class="container p-3 bg-white rounded-3 pt-4 mt-1" method="post">
                         <div class="form-group mb-2">
                             <label for="borrowId">Borrow ID</label>
