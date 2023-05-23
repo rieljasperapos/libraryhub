@@ -1,5 +1,5 @@
 # CIS-1202-project
-A simple web application that implements CRUD functionalities
+A simple web-based LMS that implements CRUD functionalities
 
 # Application Mockup
 <img src="./images/wireframes/SignupPage.png">
