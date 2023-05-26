@@ -16,14 +16,22 @@ $user_data = check_login($con);
             </button>
 
             <div class="collapse navbar-collapse" id="navmenu">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto">';
+
+                if ($user_data['accountId'] == 1) {
+                    echo '<li class="nav-item p-3">
+                     <a href="return.php" class="nav-link">To Return</a>
+                 </li>';
+                 }
+                 echo'
                     <li class="nav-item p-3">
                         <a href="index.php" class="nav-link">Home</a>
-                    </li>
-                    <li class="nav-item p-3">
+                    </li>';
+                    if ($user_data['accountId'] != 1) {
+                       echo '<li class="nav-item p-3">
                         <a href="borrow.php" class="nav-link">Borrow</a>
                     </li>';
-                
+                    }
                     if ($user_data['accountId'] == 1) {
                        echo '<li class="nav-item p-3">
                         <a href="book.php" class="nav-link" >Manage</a>
