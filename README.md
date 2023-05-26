@@ -11,6 +11,7 @@ A simple web-based LMS that implements CRUD functionalities
 **Admin features:**
 
 <img src="./images/wireframes/toreturnpage.png">
+
 <img src="./images/wireframes/ManageBooks.png">
 
 
