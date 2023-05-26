@@ -15,13 +15,13 @@ A simple web-based LMS that implements CRUD functionalities
 <img src="./images/wireframes/dashboarduser.png">
 
 
-**Borrow Page**
+**Borrow and Return Page**
 
 <img src="./images/wireframes/Borrowpageuser.png">
 
 **Admin features:**
 
-**Return Page**
+**Lists of Borrowed Books Page**
 
 <img src="./images/wireframes/toreturnpage.png">
 
