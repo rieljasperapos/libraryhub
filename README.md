@@ -23,7 +23,7 @@ A simple web-based LMS that implements CRUD functionalities
 
 **Lists of Borrowed Books Page**
 
-<img src="./images/wireframes/toreturnpage.png">
+<img src="./images/wireframes/toreturnadmin.png">
 
 **Manage Page**
 
