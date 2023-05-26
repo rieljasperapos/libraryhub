@@ -61,7 +61,7 @@ $user_data = check_login($con);
                                     <th class='text-center'>Book ID</th>
                                     <th>Book Title</th>
                                     <th class='text-center'>Borrowed Date</th>
-                                    <th class='text-center'>Is Returned</th>
+                                    <th class='text-center'>Returned</th>
                                 </tr>
                             </thead>
                             <tbody>";
