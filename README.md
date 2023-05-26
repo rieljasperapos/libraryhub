@@ -12,6 +12,7 @@ A simple web-based LMS that implements CRUD functionalities
 **Return Page**
 
 <img src="./images/wireframes/toreturnpage.png">
+
 **Manage Page**
 
 <img src="./images/wireframes/ManageBooks.png">
