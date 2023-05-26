@@ -50,15 +50,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addButton'])) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deleteButton'])) {
     $bookIdSelect = $_POST['bookIdSelect'];
 
-    // Check if there are any associated borrow records for the selected book
-    $checkBorrowQuery = "SELECT * FROM borrow WHERE bookId = '$bookIdSelect'";
-    $result = mysqli_query($con, $checkBorrowQuery);
+    // Check if the book's isReturned value is 1
+    $checkReturnedQuery = "SELECT isReturned FROM borrow WHERE bookId = '$bookIdSelect'";
+    $checkReturnedResult = mysqli_query($con, $checkReturnedQuery);
+    $row = mysqli_fetch_assoc($checkReturnedResult);
+    $isReturned = $row['isReturned'];
 
-    if (mysqli_num_rows($result) > 0) {
-        // Display an error message to the user
-        echo '<script>alert("Error: Cannot delete the book. It has associated borrow records.");</script>';
-    } else {
-        // No associated borrow records, proceed with deleting the book
+    if ($isReturned == 1) {
+        // Delete the book
         $deleteBookQuery = "DELETE FROM books WHERE bookId = '$bookIdSelect'";
 
         if (mysqli_query($con, $deleteBookQuery)) {
@@ -68,8 +67,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deleteButton'])) {
             // Error occurred while deleting the book
             echo "Error deleting book: " . mysqli_error($con);
         }
+    } else {
+        // The book cannot be deleted since it is not returned
+        echo "The book cannot be deleted because it has not been returned yet.";
     }
 }
+// '<script>alert("Error: Cannot delete the book. It has associated borrow records.");</script>';
 ?>
 
 <!DOCTYPE html>

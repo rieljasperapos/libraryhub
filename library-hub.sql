@@ -96,7 +96,8 @@ CREATE TABLE `borrow` (
   `borrowDate` date DEFAULT NULL,
   `returnDate` date DEFAULT NULL,
   `accountId` int(11) NOT NULL,
-  `bookId` int(11) NOT NULL
+  `bookId` int(11) NOT NULL,
+  `isReturned` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -167,7 +168,7 @@ ALTER TABLE `borrow`
 --
 ALTER TABLE `borrow`
   ADD CONSTRAINT `adding_forkey` FOREIGN KEY (`accountId`) REFERENCES `accounts` (`accountId`),
-  ADD CONSTRAINT `adding_forkey2` FOREIGN KEY (`bookId`) REFERENCES `books` (`bookId`);
+  ADD CONSTRAINT `adding_forkey2` FOREIGN KEY (`bookId`) REFERENCES `books` (`bookId`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

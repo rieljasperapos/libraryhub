@@ -46,6 +46,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['returnButton'])) {
     mysqli_query($con, $query);
 }
 
+if (isset($_POST['returnButton'])) {
+    // Retrieve the form inputs
+    $borrowId = $_POST['borrowId'];
+    $returnDate = $_POST['returnDate'];
+
+    // Update the `isReturned` column to 1 where `borrowId` matches the provided value
+    $updateQuery = "UPDATE borrow SET isReturned = 1, returnDate = '$returnDate' WHERE borrowId = $borrowId";
+    
+    // Execute the update query
+    if (mysqli_query($con, $updateQuery)) {
+        // Update successful
+        echo "Book returned successfully.";
+    } else {
+        // Update failed
+        echo "Error updating book status: " . mysqli_error($con);
+    }
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -171,7 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['returnButton'])) {
                 </div>
             </div>
 
-            <!-- Retun -->
+            <!-- Return -->
             <div class="col-md-4">
                 <div class="container custom-container mt-4 mb-5 border p-4">
                     <h3 class="fw-bold">Return</h3>

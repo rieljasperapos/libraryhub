@@ -33,7 +33,7 @@ $user_data = check_login($con);
         </div>
     </section>
 
-   <!-- forms -->
+<!-- forms -->
 <section class="container-fluid mt-5">
     <!-- To Return -->
     <div class="col-md-8 offset-md-2">
@@ -42,7 +42,7 @@ $user_data = check_login($con);
             <div class="table-responsive-xxl">
                 <?php
                 // Create a query to retrieve data from the borrow table
-                $sql = "SELECT borrow.borrowId, borrow.bookId, borrow.borrowDate, borrow.accountId, books.bookTitle, accounts.accountId, accounts.firstName, accounts.lastName
+                $sql = "SELECT borrow.borrowId, borrow.bookId, borrow.borrowDate, borrow.accountId, borrow.isReturned, books.bookTitle, accounts.accountId, accounts.firstName, accounts.lastName
                 FROM borrow
                 INNER JOIN books ON borrow.bookId = books.bookId
                 INNER JOIN accounts ON borrow.accountId = accounts.accountId";
@@ -61,12 +61,16 @@ $user_data = check_login($con);
                                     <th class='text-center'>Book ID</th>
                                     <th>Book Title</th>
                                     <th class='text-center'>Borrowed Date</th>
+                                    <th class='text-center'>Is Returned</th>
                                 </tr>
                             </thead>
                             <tbody>";
 
                     // Loop through each row and display the data
                     while ($row = mysqli_fetch_assoc($result)) {
+                        $isReturned = $row['isReturned'];
+                        $checkMark = ($isReturned == 1) ? '&#10004;' : '&#10006;';
+
                         echo "<tr>
                             <td class='text-center'>{$row['borrowId']}</td>
                             <td class='text-center'>{$row['accountId']}</td>
@@ -74,6 +78,7 @@ $user_data = check_login($con);
                             <td class='text-center'>{$row['bookId']}</td>
                             <td>{$row['bookTitle']}</td>
                             <td class='text-center'>{$row['borrowDate']}</td>
+                            <td class='text-center'>$checkMark</td>
                         </tr>";
                     }
 
