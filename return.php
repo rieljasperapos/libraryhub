@@ -29,7 +29,7 @@ $user_data = check_login($con);
     <section class="text-light p-4 text-center d-flex justify-content-center borrow mb-5">
         <div class="container my-3">
             <h1 class="fw-bold">Return</h1>
-            <p class="fs-3">Borrow and Return</p>
+            <p class="fs-3">See all borrowed books</p>
         </div>
     </section>
 
