@@ -69,7 +69,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deleteButton'])) {
         }
     } else {
         // The book cannot be deleted since it is not returned
-        echo '<script>alert("The book cannot be deleted because it has not been returned yet.");</script>';
+        echo '<div class="alert alert-warning alert-dismissible fade show mb-0" role="alert">
+            The book cannot be deleted because it has not been returned yet.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>';
     }
 }
 // '<script>alert("Error: Cannot delete the book. It has associated borrow records.");</script>';
