@@ -1,4 +1,4 @@
-# CIS-1202-project
+# Library Hub
 A simple web-based LMS that implements CRUD functionalities
 
 # Application Mockup
